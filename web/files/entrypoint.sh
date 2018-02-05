@@ -48,9 +48,15 @@ nginx
 
 # crawl letsencrypt certs
 if [ "${LETSENCRYPT}" == '1' ]; then
-	certbot -c ${INSTALLDIR}/letsencrypt.ini certonly --test-cert \
-		--agree-tos --register-unsafely-without-email \
-		-d "${DOMAIN}"
+	mkdir -p /run/le-webroot
+
+	if ! [ -e "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" ]; then
+		certbot -c ${INSTALLDIR}/letsencrypt.ini certonly --test-cert \
+			--agree-tos --register-unsafely-without-email \
+			-d "${DOMAIN}"
+	else
+		echo "Letsencrypt certificate is available"
+	fi
 
 	acme_cron &
 
