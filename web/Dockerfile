@@ -47,6 +47,7 @@ RUN set -u \
  && ln -sT ${INSTALLDIR}/php-fpm.conf /etc/php/7.1/fpm/pool.d/orocrm.conf \
  && ln -sT ${INSTALLDIR}/php.ini      /etc/php/7.1/fpm/conf.d/orocrm.ini \
  && ln -sT ${INSTALLDIR}/php.ini      /etc/php/7.1/cli/conf.d/orocrm.ini \
+ && ln -sT ${INSTALLDIR}/oro-console.sh /usr/local/bin/oro-console \
  && mkdir -p ${INSTALLDIR} \
  && chown -R www-data:www-data ${INSTALLDIR} \
  && su - www-data -s /bin/bash -c "git clone https://github.com/oroinc/crm-application.git ${INSTALLDIR}/src" \

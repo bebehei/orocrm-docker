@@ -14,6 +14,16 @@ $EDITOR env_global
 docker-compose up -d
 ```
 
+## Executing commands
+
+If you need manage the installation and have to execute some oro commands, you can access the console via:
+
+```
+docker-compose exec web oro-console <command>
+```
+
+Where `<command>` could be something like `help`, which will give a list of available commands.
+
 # Installation
 
 TODO
