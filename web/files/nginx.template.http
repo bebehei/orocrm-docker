@@ -1,0 +1,10 @@
+
+server {
+	listen [::]:80; listen 80;
+
+	root ${INSTALLDIR}/src;
+
+	server_name ${DOMAIN};
+
+	include ${INSTALLDIR}/nginx.sharedcfg;
+}

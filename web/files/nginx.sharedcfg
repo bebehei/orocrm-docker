@@ -1,0 +1,23 @@
+error_log /var/log/nginx/orocrm_error.log;
+access_log /var/log/nginx/orocrm_access.log;
+#access_log /var/log/nginx/orocrm.log fpm;
+#error_log /var/log/nginx/orocrm.log fpm;
+
+# Letsencrypt webroot configuration
+location "/.well-known/acme-challenge" {
+	default_type "text/plain";
+	root /run/le-webroot;
+	auth_basic off;
+}
+
+location / {
+	try_files $uri /app.php$is_args$args;
+}
+
+location ~ ^.*\.php(/|$) {
+	fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+	fastcgi_split_path_info ^(.+\.php)(/.*)$;
+	include fastcgi_params;
+	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	fastcgi_param DOCUMENT_ROOT $document_root;
+}
