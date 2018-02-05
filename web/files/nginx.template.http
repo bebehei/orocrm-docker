@@ -2,7 +2,7 @@
 server {
 	listen [::]:80; listen 80;
 
-	root ${INSTALLDIR}/src;
+	root ${INSTALLDIR}/src/web/;
 
 	server_name ${DOMAIN};
 
