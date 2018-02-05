@@ -32,6 +32,17 @@ acme_cron(){
 
 export DOMAIN=${DOMAIN:-$(hostname --fqdn)}
 
+sed -i "
+    s/database_host:.*/database_host: ${ORO_DB_HOST:-null}/;
+    s/database_port:.*/database_port: ${ORO_DB_PORT:-null}/;
+    s/database_name:.*/database_name: ${ORO_DB_NAME:-null}/;
+    s/database_user:.*/database_user: ${ORO_DB_USER:-null}/;
+    s/database_password:.*/database_password: ${ORO_DB_PASS:-null}/;
+    s/locale:.*/locale: ${ORO_LOCALE:-en}/;
+    s/installed:.*/installed: ${ORO_INSTALLED:-null}/;
+    s/secret:.*/secret: ${ORO_SECRET:-null}/;
+" ${INSTALLDIR}/src/app/config/parameters.yml
+
 # start basic php fpm server
 mkdir -p $(dirname "${PID_FPM}") 
 php-fpm7.1 -F --pid ${PID_FPM} &

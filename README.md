@@ -9,8 +9,8 @@ Featuring a full nginx webserver with letsencrypt support
 ```
 git clone https://github.com/bebehei/orocrm-docker
 cd orocrm-docker
-cp env_global.tpl env_global
-$EDITOR env_global
+cp config.tpl config
+$EDITOR config
 docker-compose up -d
 ```
 

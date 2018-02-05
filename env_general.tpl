@@ -1,2 +1,0 @@
-DOMAIN=orocrm.local
-LETSENCRYPT=1

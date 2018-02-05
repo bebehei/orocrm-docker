@@ -5,15 +5,27 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=changeme
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=orocrm
+      - MYSQL_USER=orocrm
+      - MYSQL_PASSWORD=${ORO_DB_PASS}
   web:
     build: web
     image: bebehei/orocrm
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - DOMAIN=${DOMAIN}
+      - LETSENCRYPT=${LETSENCRYPT}
+      - ORO_DB_DRIVER=pdo_mysql
+      - ORO_DB_HOST=db
+      - ORO_DB_PORT=null
+      - ORO_DB_NAME=orocrm
+      - ORO_DB_USER=orocrm
+      - ORO_DB_PASS=${ORO_DB_PASS}
+      - ORO_LOCALE=${ORO_LOCALE}
+      - ORO_SECRET=${ORO_SECRET}
+      - ORO_INSTALLED=${ORO_INSTALLED}
     volumes:
       - ./data/letsencrypt:/etc/letsencrypt
-    env_file:
-      - env_general

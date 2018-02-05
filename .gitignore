@@ -1,4 +1,3 @@
 /docker-compose.override.yml
 /data
-/env_*
-!/env_*.tpl
+/config
