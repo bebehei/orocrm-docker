@@ -26,7 +26,25 @@ Where `<command>` could be something like `help`, which will give a list of avai
 
 # Installation
 
-TODO
+Do it via the command line:
+
+```
+docker-compose exec web \
+  oro-console oro:install --env=prod \
+     --application-url=https://customers.are-not-relev.ant \
+     --user-name=bogusadmin \
+     --user-email=admin@are-not-relev.ant \
+     --user-firstname=Bogus \
+     --user-lastname=Admin \
+     --user-password=null \
+     --sample-data=true
+```
+
+**IMPORTANT: Set the `ORO_INSTALLED` variable after installation to something, which evaluates to `true` in PHP. At best, use the output of `php -r 'print(date("c"). "\n");'`, as this is the same, what OroCRM would set it to.**
+
+To get a full list of supported options, consult `docker-compose exec web oro-console help oro:install`.
+
+As an alternative, you also could just go to the website and run through the install instructions there.
 
 ## Configuration
 
