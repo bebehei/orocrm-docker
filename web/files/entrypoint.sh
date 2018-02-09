@@ -22,7 +22,7 @@ trap exit_handler TERM QUIT
 
 acme_cron(){
 	while sleep $(( 60 * 60 * 24 )); do
-		certbot -c ${INSTALLDIR}/letsencrypt.ini renew --test-cert -d "${DOMAIN}"
+		certbot -c ${INSTALLDIR}/letsencrypt.ini renew -d "${DOMAIN}"
 	done
 }
 
@@ -62,7 +62,7 @@ if [ "${LETSENCRYPT}" == '1' ]; then
 	mkdir -p /run/le-webroot
 
 	if ! [ -e "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" ]; then
-		certbot -c ${INSTALLDIR}/letsencrypt.ini certonly --test-cert \
+		certbot -c ${INSTALLDIR}/letsencrypt.ini certonly \
 			--agree-tos --register-unsafely-without-email \
 			-d "${DOMAIN}"
 	else
