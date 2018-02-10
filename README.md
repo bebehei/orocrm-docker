@@ -40,7 +40,7 @@ docker-compose exec web \
      --sample-data=true
 ```
 
-**IMPORTANT: Set the `ORO_INSTALLED` variable after installation to something, which evaluates to `true` in PHP. At best, use the output of `php -r 'print(date("c"). "\n");'`, as this is the same, what OroCRM would set it to.**
+**IMPORTANT: Set the `ORO_INSTALLED` variable after installation to something, which evaluates to `true` in PHP. At best, use the output of `date -Iseconds`, as this is the same, what OroCRM would set it to.**
 
 To get a full list of supported options, consult `docker-compose exec web oro-console help oro:install`.
 
