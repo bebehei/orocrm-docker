@@ -7,12 +7,6 @@ set -euo pipefail
 export SSL_KEY=/certs/ssl.key
 export SSL_CRT=/certs/ssl.crt
 
-acme_cron(){
-	while sleep $(( 60 * 60 * 24 )); do
-		certbot -c ${INSTALLDIR}/letsencrypt.ini renew -d "${DOMAIN}"
-	done
-}
-
 ! [ "${LETSENCRYPT}" == '1' ] \
 	|| [ -n "${DOMAIN+x}" ] \
 	|| { echo "Letsencrypt activated, but no domain set."; exit 1; }
@@ -52,8 +46,6 @@ if [ "${LETSENCRYPT}" == '1' ]; then
 	else
 		echo "Letsencrypt certificate is available"
 	fi
-
-	acme_cron &
 
 	export SSL_CRT="/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
 	export SSL_KEY="/etc/letsencrypt/live/${DOMAIN}/privkey.pem"
