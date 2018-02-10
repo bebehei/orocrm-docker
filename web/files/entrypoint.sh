@@ -40,7 +40,7 @@ if [ "${LETSENCRYPT}" == '1' ]; then
 	if ! [ -e "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" ]; then
 		# nginx may not be fully initialized yet
 		until [ -e '/run/nginx.pid' ]; do sleep 1; done
-		certbot -c ${INSTALLDIR}/letsencrypt.ini certonly \
+		certbot -q -c ${INSTALLDIR}/letsencrypt.ini certonly \
 			--agree-tos --register-unsafely-without-email \
 			-d "${DOMAIN}"
 	else
