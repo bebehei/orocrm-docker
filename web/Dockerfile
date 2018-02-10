@@ -38,6 +38,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
       supervisor \
       unzip \
       wget \
+ && rm -rf \
+      /var/lib/apt/lists/* \
  && true
 
 ENV ORO_VERSION=2.6.0 \
