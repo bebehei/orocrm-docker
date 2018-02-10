@@ -1,5 +1,5 @@
-error_log /var/log/nginx/orocrm.log;
-access_log /var/log/nginx/orocrm.log;
+error_log /dev/stderr;
+access_log /dev/stdout;
 
 # Letsencrypt webroot configuration
 location "/.well-known/acme-challenge" {

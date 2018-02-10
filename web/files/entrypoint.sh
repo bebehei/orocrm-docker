@@ -70,9 +70,6 @@ if   [ -r "${SSL_CRT}" ] \
 	nginx -s reload
 fi
 
-touch /var/log/nginx/orocrm.log
-tail -f /var/log/nginx/orocrm.log &
-
 oro-console fos:js-routing:dump
 oro-console oro:localization:dump
 oro-console oro:assets:install
