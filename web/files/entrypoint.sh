@@ -62,13 +62,15 @@ if   [ -r "${SSL_CRT}" ] \
 	nginx -s reload
 fi
 
-oro-console fos:js-routing:dump
-oro-console oro:localization:dump
-oro-console oro:assets:install
-oro-console assetic:dump
-oro-console oro:requirejs:build
-oro-console cache:clear
-oro-console oro:translation:dump
-oro-console oro:language:update --language=${ORO_LOCALE:-en}
+if [ "${ORO_INSTALLED}" != "null" ]; then
+	oro-console fos:js-routing:dump
+	oro-console oro:localization:dump
+	oro-console oro:assets:install
+	oro-console assetic:dump
+	oro-console oro:requirejs:build
+	oro-console cache:clear
+	oro-console oro:translation:dump
+	oro-console oro:language:update --language=${ORO_LOCALE:-en}
+fi
 
 wait
