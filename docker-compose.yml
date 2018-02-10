@@ -5,6 +5,7 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
     environment:
+      - TZ=${TZ}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=orocrm
       - MYSQL_USER=orocrm
@@ -16,6 +17,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
+      - TZ=${TZ}
       - DOMAIN=${DOMAIN}
       - LETSENCRYPT=${LETSENCRYPT}
       - ORO_DB_DRIVER=pdo_mysql

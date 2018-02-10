@@ -8,3 +8,4 @@ ORO_LOCALE=en
 ORO_INSTALLED=null
 LETSENCRYPT=0
 DOMAIN=crm
+TZ=Europe/Berlin
