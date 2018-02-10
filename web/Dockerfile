@@ -58,4 +58,4 @@ RUN set -u \
 
 ADD files/ ${INSTALLDIR}
 
-ENTRYPOINT "${INSTALLDIR}/entrypoint.sh"
+ENTRYPOINT [ "/srv/orocrm/entrypoint.sh" ]
