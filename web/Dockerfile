@@ -35,6 +35,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
       php7.1-xml \
       php7.1-xmlwriter \
       php7.1-zip \
+      supervisor \
       unzip \
       wget \
  && true

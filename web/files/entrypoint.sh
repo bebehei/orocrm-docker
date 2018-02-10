@@ -4,21 +4,8 @@ export LETSENCRYPT=${LETSENCRYPT:-0}
 
 set -euo pipefail
 
-PID_NGINX=/run/nginx/nginx.pid
-PID_FPM=/run/php/php-fpm.pid
-
 export SSL_KEY=/certs/ssl.key
 export SSL_CRT=/certs/ssl.crt
-
-exit_handler(){
-	kill $(cat ${PID_FPM})
-	nginx -s quit
-	while [ -e ${PID_NGINX} ]; do
-		sleep 0.1
-	done
-}
-
-trap exit_handler TERM QUIT
 
 acme_cron(){
 	while sleep $(( 60 * 60 * 24 )); do
@@ -43,25 +30,22 @@ sed -i "
     s/secret:.*/secret: ${ORO_SECRET:-null}/;
 " ${INSTALLDIR}/src/app/config/parameters.yml
 
-# start basic php fpm server
-mkdir -p $(dirname "${PID_FPM}") 
-php-fpm7.1 -F --pid ${PID_FPM} &
-
 # force remove old configuration
 # a container restart may still contain it
 rm -f /etc/nginx/conf.d/*
-
-# start basic nginx server
-mkdir -p $(dirname "${PID_NGINX}") 
 envsubst < ${INSTALLDIR}/nginx.template.http \
          > /etc/nginx/conf.d/http.conf
-nginx
+
+supervisord -nc ${INSTALLDIR}/supervisord.conf &
+trap "supervisorctl shutdown && wait" SIGTERM
 
 # crawl letsencrypt certs
 if [ "${LETSENCRYPT}" == '1' ]; then
 	mkdir -p /run/le-webroot
 
 	if ! [ -e "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" ]; then
+		# nginx may not be fully initialized yet
+		until [ -e '/run/nginx.pid' ]; do sleep 1; done
 		certbot -c ${INSTALLDIR}/letsencrypt.ini certonly \
 			--agree-tos --register-unsafely-without-email \
 			-d "${DOMAIN}"
@@ -80,6 +64,9 @@ if   [ -r "${SSL_CRT}" ] \
 	&& [ -r "${SSL_KEY}" ]; then
 	envsubst < ${INSTALLDIR}/nginx.template.https \
 	         > /etc/nginx/conf.d/https.conf
+
+	# nginx may not be fully initialized yet
+	until [ -e '/run/nginx.pid'  ]; do sleep 1; done
 	nginx -s reload
 fi
 
