@@ -14,6 +14,7 @@ export SSL_CRT=/certs/ssl.crt
 export DOMAIN=${DOMAIN:-$(hostname --fqdn)}
 
 sed -i "
+    s/database_driver:.*/database_driver: ${ORO_DB_DRIVER:-null}/;
     s/database_host:.*/database_host: ${ORO_DB_HOST:-null}/;
     s/database_port:.*/database_port: ${ORO_DB_PORT:-null}/;
     s/database_name:.*/database_name: ${ORO_DB_NAME:-null}/;
